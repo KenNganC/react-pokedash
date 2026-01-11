@@ -6,7 +6,7 @@ import { BookMarked, Loader2, Search } from "lucide-react";
 import PokemonCard from "./pokemonCard";
 import Loading from "./loading";
 import Error from "./error";
-import Drawer from "./Drawer";
+import Drawer from "./drawer";
 function DashBoard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetail | null>(
