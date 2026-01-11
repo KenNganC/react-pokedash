@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# React PokéDash
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive Pokémon dashboard built with **React**, **TypeScript**, and **Vite**. Search for any Pokémon, view detailed info, and explore base stats with a beautiful radar chart powered by Recharts.
 
-Currently, two official plugins are available:
+**Live Demo**: [https://react-pokedash.vercel.app](https://react-pokedash.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Search Pokémon** by name or Pokédex number (powered by the [PokéAPI](https://pokeapi.co/))
+- **Detailed view** including sprite, types, abilities, height, weight, and more
+- **Interactive radar chart** for base stats (HP, Attack, Defense, Special Attack, Special Defense, Speed)
+- Fully responsive design – works great on desktop and mobile
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Screenshots
 
-## Expanding the ESLint configuration
+<img width="5088" height="3576" alt="image" src="https://github.com/user-attachments/assets/05bc3bff-ae58-4130-b135-d64c95fed960" />
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<img width="5088" height="3576" alt="image" src="https://github.com/user-attachments/assets/ebb1c923-2ad9-4ca8-98ce-77cc3e925d06" />
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [React](https://react.dev/) – UI library
+- [TypeScript](https://www.typescriptlang.org/) – Type safety
+- [Vite](https://vitejs.dev/) – Build tool & dev server
+- [Recharts](https://recharts.org/) – Radar chart and data visualization
+- Tailwind CSS (or custom styling with utility classes) – Responsive styling
+- PokéAPI – Free Pokémon data source
+
+## Installation & Setup
+
+```bash
+git clone https://github.com/KenNganC/react-pokedash.git
+cd react-pokedash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Future Enhancements 
+- Evolution chain visualization  
+- Moves list with filtering (by type, power, etc.)  
+- Favorites / "My Team" feature with localStorage persistence  
+- Dark mode toggle  
