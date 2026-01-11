@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useIntersectionObserver = (cb: any, options = {}) => {
+const useIntersectionObserver = (cb: () => void, options = {}) => {
   const observerRef = useRef(null);
 
   useEffect(() => {

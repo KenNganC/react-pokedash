@@ -94,6 +94,8 @@ export interface PokemonDetail {
 }
 
 const fetchPokemonPage = async ({ pageParam = 0 }) => {
+  // for loading indicator demo
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch(
     `${BASE_URL}?limit=${PAGE_LIMIT}&offset=${pageParam}`
   );

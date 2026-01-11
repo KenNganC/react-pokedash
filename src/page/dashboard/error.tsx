@@ -1,9 +1,15 @@
-import { RefreshCw, X } from "lucide-react";
+import { Bug, RefreshCw } from "lucide-react";
 
-const Error = ({ message, onRetry }: { message: string; onRetry: any }) => (
+const Error = ({
+  message,
+  onRetry,
+}: {
+  message: string;
+  onRetry: () => void;
+}) => (
   <div className="flex flex-col items-center justify-center py-12 text-center text-slate-500">
     <div className="bg-red-50 p-4 rounded-full mb-4">
-      <X className="w-8 h-8 text-red-500" />
+      <Bug className="w-8 h-8 text-red-500" />
     </div>
     <h3 className="text-lg font-semibold text-slate-800 mb-2">
       Oops! Something went wrong

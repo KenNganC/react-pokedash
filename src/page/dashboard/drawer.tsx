@@ -1,6 +1,14 @@
-import { Activity, Ruler, Weight, X } from "lucide-react";
+import { Ruler, Weight, X } from "lucide-react";
 import { type PokemonDetail } from "../../api/api";
 import { STAT_ICONS, TYPE_COLORS } from "../../config";
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 const Drawer = ({
   pokemon,
@@ -8,14 +16,15 @@ const Drawer = ({
   isOpen,
 }: {
   pokemon: PokemonDetail | null;
-  onClose: any;
+  onClose: () => void;
   isOpen: boolean;
 }) => {
   if (!pokemon) return null;
-
+  const pokemonMap = pokemon.stats.reduce((p, c) => {
+    return { ...p, [c.stat.name]: c.base_stat };
+  }, {} as Record<keyof typeof STAT_ICONS, number>);
   return (
     <>
-      {/* Backdrop for mobile */}
       <div
         className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -23,13 +32,11 @@ const Drawer = ({
         onClick={onClose}
       />
 
-      {/* Drawer Panel */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-full md:w-[450px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out border-l border-slate-100 overflow-hidden flex flex-col ${
+        className={`fixed inset-y-0 left-0 z-50 w-full md:w-112.5 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out border-l border-slate-100 overflow-hidden flex flex-col ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-white z-10">
           <div>
             <span className="text-sm font-bold text-slate-400">
@@ -47,9 +54,7 @@ const Drawer = ({
           </button>
         </div>
 
-        {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-6 bg-slate-50/50">
-          {/* Hero Image */}
           <div className="flex justify-center mb-8 relative">
             <div className="w-64 h-64 relative z-10">
               <img
@@ -62,7 +67,6 @@ const Drawer = ({
                 className="w-full h-full object-contain drop-shadow-xl animate-bounce-slow"
               />
             </div>
-            {/* Background Circle */}
             <div
               className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56 rounded-full opacity-20 ${
                 TYPE_COLORS[pokemon.types[0].type.name]
@@ -70,7 +74,6 @@ const Drawer = ({
             ></div>
           </div>
 
-          {/* Types */}
           <div className="flex justify-center gap-2 mb-8">
             {pokemon.types.map((t) => (
               <span
@@ -84,7 +87,6 @@ const Drawer = ({
             ))}
           </div>
 
-          {/* Measurements */}
           <div className="grid grid-cols-2 gap-4 mb-8">
             <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center justify-center flex-col">
               <div className="flex items-center gap-2 text-slate-400 mb-1">
@@ -106,45 +108,99 @@ const Drawer = ({
             </div>
           </div>
 
-          {/* Base Stats */}
           <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
             Base Stats
           </h3>
-          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-5 space-y-4">
-            {pokemon.stats.map((stat) => {
-              const Icon = STAT_ICONS[stat.stat.name] || Activity;
-              const colorClass =
-                stat.base_stat > 99
-                  ? "bg-green-500"
-                  : stat.base_stat > 50
-                  ? "bg-yellow-500"
-                  : "bg-red-500";
 
-              return (
-                <div key={stat.stat.name}>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <div className="flex items-center gap-2">
-                      <Icon className="w-4 h-4 text-slate-400" />
-                      <span className="text-sm font-medium text-slate-600 capitalize">
-                        {stat.stat.name.replace("-", " ")}
-                      </span>
-                    </div>
-                    <span className="text-sm font-bold text-slate-800">
-                      {stat.base_stat}
-                    </span>
-                  </div>
-                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${colorClass} rounded-full transition-all duration-1000 ease-out`}
-                      style={{ width: `${Math.min(stat.base_stat, 100)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 py-1 h-80 md:h-95">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart
+                cx="50%"
+                cy="50%"
+                outerRadius="70%"
+                data={[
+                  {
+                    stat: "HP",
+                    value: pokemonMap.hp,
+                    fullMark: 200,
+                  },
+                  {
+                    stat: "SP Attack",
+                    value: pokemonMap["special-attack"],
+                    fullMark: 150,
+                  },
+                  {
+                    stat: "SP Defense",
+                    value: pokemonMap["special-defense"],
+                    fullMark: 150,
+                  },
+
+                  {
+                    stat: "Speed",
+                    value: pokemonMap.speed,
+                    fullMark: 150,
+                  },
+                  {
+                    stat: "Defense",
+                    value: pokemonMap.defense,
+                    fullMark: 150,
+                  },
+                  {
+                    stat: "Attack",
+                    value: pokemonMap.attack,
+                    fullMark: 150,
+                  },
+                ]}
+              >
+                <PolarGrid
+                  gridType="polygon"
+                  stroke="#e2e8f0"
+                  strokeDasharray="3 3"
+                />
+
+                <PolarAngleAxis
+                  dataKey="stat"
+                  tick={{
+                    fill: "#475569",
+                    fontSize: 12,
+                    fontWeight: 500,
+                  }}
+                />
+
+                <Radar
+                  name="Base Stat"
+                  dataKey="value"
+                  stroke="#3b82f6"
+                  fill="#3b82f6"
+                  fillOpacity={0.35}
+                  strokeWidth={2}
+                  dot={{ stroke: "#3b82f6", strokeWidth: 2, r: 4 }}
+                />
+                <Radar
+                  name="Max"
+                  dataKey="fullMark"
+                  fill="none"
+                  strokeWidth={1.5}
+                  dot={false}
+                />
+                <Tooltip
+                  formatter={(
+                    value: number | undefined,
+                    name: string | undefined
+                  ) => {
+                    if (name === "Max") return [];
+                    return [`${value}`];
+                  }}
+                  contentStyle={{
+                    backgroundColor: "rgba(255,255,255,0.95)",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)",
+                  }}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
           </div>
-
-          {/* Abilities */}
           <div className="mt-8">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
               Abilities

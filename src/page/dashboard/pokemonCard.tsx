@@ -6,18 +6,14 @@ const PokemonCard = ({
   onClick,
 }: {
   pokemon: PokemonDetail;
-  onClick: any;
+  onClick: (pokemon: PokemonDetail) => void;
 }) => {
   return (
     <button
       onClick={() => onClick(pokemon)}
-      className="group relative flex items-center bg-white rounded-xl p-4 shadow-sm border border-slate-100 hover:shadow-md hover:border-red-200 transition-all text-left w-full overflow-hidden"
+      className="group relative flex items-center bg-white rounded-xl p-4 shadow-sm border border-slate-100 hover:shadow-md hover:border-red-200 transition-all text-left w-full overflow-hidden cursor-pointer hover:bg-slate-50"
     >
-      {/* Background decoration */}
-      <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-slate-50 rounded-full group-hover:bg-red-50 transition-colors z-0"></div>
-
-      {/* Image */}
-      <div className="relative z-10 w-20 h-20 flex-shrink-0 bg-slate-100 rounded-lg flex items-center justify-center mr-4 group-hover:scale-105 transition-transform">
+      <div className="relative z-10 w-20 h-20 shrink-0 bg-slate-100 rounded-lg flex items-center justify-center mr-4 group-hover:scale-105 transition-transform">
         <img
           src={pokemon.sprites.front_default || ""}
           alt={pokemon.name}
@@ -26,7 +22,6 @@ const PokemonCard = ({
         />
       </div>
 
-      {/* Info */}
       <div className="relative z-10 flex-1 min-w-0">
         <span className="text-xs font-bold text-slate-400">
           #{String(pokemon.id).padStart(3, "0")}

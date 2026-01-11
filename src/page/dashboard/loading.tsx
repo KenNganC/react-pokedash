@@ -5,7 +5,7 @@ const Loading = () => (
         key={i}
         className="bg-white rounded-xl shadow-sm p-4 animate-pulse border border-slate-100 h-32 flex items-center space-x-4"
       >
-        <div className="w-20 h-20 bg-slate-200 rounded-full flex-shrink-0"></div>
+        <div className="w-20 h-20 bg-slate-200 rounded-full shrink-0"></div>
         <div className="flex-1 space-y-3">
           <div className="h-4 bg-slate-200 rounded w-1/3"></div>
           <div className="h-6 bg-slate-200 rounded w-3/4"></div>

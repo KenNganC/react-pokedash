@@ -20,13 +20,13 @@ const TYPE_COLORS: Record<string, string> = {
   fairy: "bg-pink-300 text-black",
 };
 
-const STAT_ICONS: Record<string, any> = {
+const STAT_ICONS = {
   hp: Activity,
   attack: Zap,
   defense: Shield,
   "special-attack": Zap,
   "special-defense": Shield,
   speed: ArrowRight,
-};
+} as const;
 
 export { TYPE_COLORS, STAT_ICONS };

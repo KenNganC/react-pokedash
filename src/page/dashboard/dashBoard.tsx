@@ -49,36 +49,36 @@ function DashBoard() {
 
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-900 overflow-hidden">
-      {/* Main Content Area */}
       <div
         className={`flex-1 flex flex-col h-full transition-all duration-300 ${
-          selectedPokemon ? "lg:mr-[450px]" : ""
+          selectedPokemon ? "lg:ml-112.5" : ""
         }`}
       >
-        {/* Header */}
-        <header className="bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0 z-20">
+        <header className="bg-red-800 border-b border-slate-200 px-6 py-4 shrink-0 z-20">
           <div className="max-w-5xl mx-auto w-full">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-black tracking-tight text-slate-900 flex items-center gap-2">
+                <h1 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white shadow-sm">
-                    <BookMarked className="w-5 h-5 fill-current" color="red" />
+                    <BookMarked
+                      className="w-5 h-5 fill-current"
+                      color="black"
+                    />
                   </div>
                   PokeDash
                 </h1>
-                <p className="text-sm text-slate-500 font-medium">
+                <p className="text-sm text-slate-300 font-medium">
                   Pokemon Dashboard
                 </p>
               </div>
 
-              {/* Search Bar */}
               <div className="relative w-full md:w-96">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Search className="h-5 w-5 text-slate-400" />
                 </div>
                 <input
                   type="text"
-                  placeholder="Filter loaded Pokemon..."
+                  placeholder="Search filtered loaded Pokemon..."
                   className="block w-full pl-10 pr-4 py-2.5 bg-slate-100 border-transparent text-slate-900 placeholder-slate-400 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -88,23 +88,20 @@ function DashBoard() {
           </div>
         </header>
 
-        {/* Scrollable List Container */}
         <main className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-6 relative">
           <div className="max-w-5xl mx-auto min-h-full flex flex-col">
-            {/* Status: Loading Initial */}
             {isLoading && <Loading />}
 
-            {/* Status: Error */}
             {isError && (
               <Error
                 message={error?.message}
                 onRetry={() => window.location.reload()}
               />
             )}
-            {/* Status: Success & Data */}
             {!isLoading && !isError && (
               <>
                 <div className="flex items-center justify-between mb-4">
+                  <div />
                   <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
                     {filteredList.length} Loaded
                   </h2>
@@ -128,7 +125,6 @@ function DashBoard() {
                   </div>
                 )}
 
-                {/* Loading More Spinner & Trigger */}
                 {!searchTerm && (
                   <div
                     ref={loadMoreRef}
@@ -155,7 +151,6 @@ function DashBoard() {
           </div>
         </main>
       </div>
-      {/* Details Drawer */}
       <Drawer
         pokemon={selectedPokemon}
         isOpen={!!selectedPokemon}
