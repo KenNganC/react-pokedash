@@ -1,12 +1,17 @@
 import { useState, useMemo, useCallback } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchPokemonPage } from "../../api/api";
+import { fetchPokemonPage, type PokemonDetail } from "../../api/api";
 import { useIntersectionObserver } from "../../hooks";
 import { BookMarked, Loader2, Search } from "lucide-react";
 import PokemonCard from "./pokemonCard";
+import Loading from "./loading";
+import Error from "./error";
+import Drawer from "./Drawer";
 function DashBoard() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetail | null>(
+    null
+  );
 
   const {
     data,
@@ -15,6 +20,7 @@ function DashBoard() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    error,
   } = useInfiniteQuery({
     queryKey: ["pokemon"],
     queryFn: fetchPokemonPage,
@@ -85,6 +91,16 @@ function DashBoard() {
         {/* Scrollable List Container */}
         <main className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-6 relative">
           <div className="max-w-5xl mx-auto min-h-full flex flex-col">
+            {/* Status: Loading Initial */}
+            {isLoading && <Loading />}
+
+            {/* Status: Error */}
+            {isError && (
+              <Error
+                message={error?.message}
+                onRetry={() => window.location.reload()}
+              />
+            )}
             {/* Status: Success & Data */}
             {!isLoading && !isError && (
               <>
@@ -139,6 +155,12 @@ function DashBoard() {
           </div>
         </main>
       </div>
+      {/* Details Drawer */}
+      <Drawer
+        pokemon={selectedPokemon}
+        isOpen={!!selectedPokemon}
+        onClose={() => setSelectedPokemon(null)}
+      />
     </div>
   );
 }
