@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "./App.css";
 import DashBoard from "./page/dashboard/dashBoard";
 
 function App() {

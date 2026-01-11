@@ -43,4 +43,4 @@ const fetchPokemonPage = async ({ pageParam = 0 }) => {
   };
 };
 
-export { fetchPokemonPage };
+export { fetchPokemonPage, type PokemonDetail };
